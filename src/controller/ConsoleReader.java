@@ -25,6 +25,7 @@ public class ConsoleReader {
      * Checks whether a string is not blank.
      *
      * @param string the string to validate
+     * @return boolean isBlank
      */
     public static boolean isStringBlank(final String string) {
         boolean isBlank = string.isBlank();
