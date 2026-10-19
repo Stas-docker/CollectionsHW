@@ -14,7 +14,6 @@ public class Menu {
                 """);
     }
 
-
     /**
      * Displays the options to continue or exit.
      */
