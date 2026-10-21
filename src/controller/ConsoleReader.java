@@ -1,5 +1,7 @@
 package controller;
 
+import utils.StringUtils;
+
 import java.util.Scanner;
 
 /**
@@ -15,36 +17,38 @@ public class ConsoleReader {
      */
     public static String readWord(final Scanner scanner) {
         String word = scanner.nextLine();
-        while (isStringBlank(word) && scanner.hasNextLine()) {
+        while (StringUtils.isStringBlank(word) && scanner.hasNextLine()) {
             word = scanner.nextLine();
         }
         return word;
     }
 
     /**
-     * Checks whether a string is not blank.
+     * Reads the user's choice to continue or exit (1 or 2).
      *
-     * @param string the string to validate
+     * @param scanner the scanner used to read input
+     * @return valid user choice (1 or 2)
      */
-    public static boolean isStringBlank(final String string) {
-        boolean isBlank = string.isBlank();
-        if (isBlank) {
-            System.out.println("String cannot be blank, please enter a word");
+    public static int readContinueOption(final Scanner scanner) {
+        int choice = readInt(scanner);
+        while (!isChoiceValid(choice)) {
+            System.out.println("\nInvalid input! Please enter 1 or 2: ");
+            choice = readInt(scanner);
         }
-        return isBlank;
+        return choice;
     }
 
     /**
-     * Reads the user's choice to continue or exit.
+     * Safely reads an integer from the scanner.
      *
      * @param scanner the scanner used to read input
-     * @return the user's choice
+     * @return the entered integer
      */
-    public static int readContinueOption(final Scanner scanner) {
+    private static int readInt(final Scanner scanner) {
         validateIntInput(scanner);
-        final int choice = scanner.nextInt();
+        final int value = scanner.nextInt();
         scanner.nextLine();
-        return choice;
+        return value;
     }
 
     /**
@@ -57,6 +61,16 @@ public class ConsoleReader {
             System.out.println("\nInvalid input! Please enter 1 or 2: ");
             scanner.next();
         }
+    }
+
+    /**
+     * Checks if the choice is valid (1 or 2).
+     *
+     * @param choice the entered choice
+     * @return true if choice is 1 or 2, false otherwise
+     */
+    public static boolean isChoiceValid(final int choice) {
+        return choice == 1 || choice == 2;
     }
 
     /**

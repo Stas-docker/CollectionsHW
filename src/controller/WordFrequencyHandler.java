@@ -14,11 +14,8 @@ public class WordFrequencyHandler {
     /**
      * Starts the song analysis application.
      */
-    public static void startSongAnalyzing() {
-        try (final Scanner scanner = new Scanner(System.in)) {
-            Menu.startMenu();
+    public static void startSongAnalyzing(final Scanner scanner) {
             runAnalysis(scanner, new Song());
-        }
     }
 
     /**
@@ -29,8 +26,11 @@ public class WordFrequencyHandler {
      */
     private static void runAnalysis(final Scanner scanner, final Song song) {
         UserChoice choice = UserChoice.UNKNOWN;
-        while (choice != UserChoice.EXIT)
+        while (choice != UserChoice.EXIT) {
+            Menu.startMenu();
             choice = processWord(scanner, song);
+        }
+        System.out.println("\nGood Bye!");
     }
 
     /**
@@ -41,11 +41,10 @@ public class WordFrequencyHandler {
      * @return the user's choice
      */
     private static UserChoice processWord(final Scanner scanner, final Song song) {
-        String word = ConsoleReader.readWord(scanner);
+        final String word = ConsoleReader.readWord(scanner);
         showWordAppearances(song, word);
         Menu.endMenu();
-        UserChoice choice = ConsoleReader.getContinueOption(ConsoleReader.readContinueOption(scanner));
-        selectContinueOption(choice);
+        final UserChoice choice = ConsoleReader.getContinueOption(ConsoleReader.readContinueOption(scanner));
         return choice;
     }
 
@@ -56,23 +55,9 @@ public class WordFrequencyHandler {
      * @param word the word to search for
      */
     public static void showWordAppearances(final Song song, final String word) {
-        String cleanedLyrics = StringUtils.cleanString(song.getLyrics());
-        String[] wordsArray = StringUtils.stringToWordsArray(cleanedLyrics);
-        int wordAppearances = StringUtils.countWord(wordsArray, word);
+        final String cleanedLyrics = StringUtils.cleanString(song.getLyrics());
+        final String[] wordsArray = StringUtils.stringToWordsArray(cleanedLyrics);
+        final int wordAppearances = StringUtils.countWord(wordsArray, word);
         System.out.println("The word was repeated in the song " + wordAppearances + " times;\n");
     }
-
-    /**
-     * Processes the user's choice.
-     *
-     * @param userChoice the selected option
-     */
-    public static void selectContinueOption(final UserChoice userChoice) {
-        switch (userChoice) {
-            case CONTINUE -> startSongAnalyzing();
-            case EXIT -> System.out.println("\nGood Bye!");
-            default -> System.out.println("\nInvalid option! Please try again.\n");
-        }
-    }
-
 }
