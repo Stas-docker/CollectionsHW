@@ -42,10 +42,10 @@ public class WordFrequencyHandler {
      */
     private static UserChoice processWord(final Scanner scanner, final Song song) {
         final String word = ConsoleReader.readWord(scanner);
+        final int continueOption = ConsoleReader.readContinueOption(scanner);
         showWordAppearances(song, word);
         Menu.endMenu();
-        final UserChoice choice = UserChoice.fromCode(ConsoleReader.readContinueOption(scanner));
-        return choice;
+        return UserChoice.fromCode(continueOption);
     }
 
     /**
