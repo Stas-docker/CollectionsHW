@@ -17,13 +17,9 @@ public class StringUtils {
      * @param string the string to clean
      * @return the cleaned string
      */
-    public static String stripPunctuationAndToLowerCase(final String string) {
-        return string.toLowerCase()
-                .replace(",", "")
-                .replace(".", "")
-                .replace("'", "")
-                .replace(")", "")
-                .replace("(", "")
+    public static String toLowerCaseAndstripPunctuation(final String string) {
+        return string.toLowerCase().
+                replaceAll("[,.')(]", "")
                 .replace("\n", " ");
     }
 
@@ -52,19 +48,6 @@ public class StringUtils {
             }
         }
         return wordsCounter;
-    }
-
-    /**
-     * Checks whether a string is not blank.
-     *
-     * @param string the string to validate
-     */
-    public static boolean isStringBlank(final String string) {
-        final boolean isBlank = string.isBlank();
-        if (isBlank) {
-            System.out.println("String cannot be blank, please enter a word");
-        }
-        return isBlank;
     }
 
     /**

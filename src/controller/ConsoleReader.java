@@ -17,7 +17,8 @@ public class ConsoleReader {
      */
     public static String readWord(final Scanner scanner) {
         String word = scanner.nextLine();
-        while (StringUtils.isStringBlank(word) && scanner.hasNextLine()) {
+        while (word.isBlank() && scanner.hasNextLine()) {
+            System.out.println("String cannot be blank, please enter a word");
             word = scanner.nextLine();
         }
         return word;
@@ -60,20 +61,6 @@ public class ConsoleReader {
      * @return true if choice is 1 or 2, false otherwise
      */
     public static boolean isChoiceValid(final int choice) {
-        return choice == 1 || choice == 2;
-    }
-
-    /**
-     * Converts a number into a user choice.
-     *
-     * @param choice the number entered by the user
-     * @return the corresponding user choice
-     */
-    public static UserChoice getContinueOption(final int choice) {
-        return switch (choice) {
-            case 1 -> UserChoice.CONTINUE;
-            case 2 -> UserChoice.EXIT;
-            default -> UserChoice.UNKNOWN;
-        };
+        return UserChoice.fromCode(choice) != UserChoice.UNKNOWN;
     }
 }
