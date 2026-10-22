@@ -45,22 +45,12 @@ public class ConsoleReader {
      * @return the entered integer
      */
     private static int readInt(final Scanner scanner) {
-        validateIntInput(scanner);
-        final int value = scanner.nextInt();
-        scanner.nextLine();
-        return value;
-    }
-
-    /**
-     * Validates the user's numeric input.
-     *
-     * @param scanner the scanner used to read input
-     */
-    public static void validateIntInput(final Scanner scanner) {
-        while (!scanner.hasNextInt()) {
-            System.out.println("\nInvalid input! Please enter 1 or 2: ");
-            scanner.next();
+        String input = scanner.nextLine();
+        while (!StringUtils.isInteger(input)) {
+            System.out.println("\nInvalid input! Please enter a valid number: ");
+            input = scanner.nextLine();
         }
+        return Integer.parseInt(input);
     }
 
     /**

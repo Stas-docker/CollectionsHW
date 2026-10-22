@@ -10,7 +10,7 @@ public class Menu {
      */
     public static void startMenu() {
         System.out.println("""
-                \nHi, type a word and I will tell you how many times it is used in the song "beatles yellow submarine"
+                \nHi, type a word and I will tell you how many times it is used in the lyrics "beatles yellow submarine"
                 """);
     }
 
