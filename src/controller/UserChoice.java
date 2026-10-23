@@ -15,12 +15,11 @@ public enum UserChoice {
     }
 
     public static UserChoice fromCode(int code) {
-        UserChoice fromKeyboard = UNKNOWN;
-        for (UserChoice choice : values()) {
-            if (choice.code == code) {
-                fromKeyboard = choice;
-            }
-        }
-        return fromKeyboard;
+        return switch (code) {
+            case 1 -> CONTINUE;
+            case 2 -> EXIT;
+            default -> UNKNOWN;
+        };
     }
 }
+

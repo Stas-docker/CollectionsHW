@@ -17,7 +17,7 @@ public class StringUtils {
      * @param string the string to clean
      * @return the cleaned string
      */
-    public static String toLowerCaseAndstripPunctuation(final String string) {
+    public static String toLowerCaseAndStripPunctuation(final String string) {
         return string.toLowerCase().
                 replaceAll("[,.')(]", "")
                 .replace("\n", " ");
@@ -31,6 +31,11 @@ public class StringUtils {
      */
     public static String[] stringToWordsArray(final String string) {
         return string.split(" ");
+    }
+
+    public static boolean fileIsNotEmpty(final String filePath) {
+        String text = readTextFromFile(filePath);
+        return !text.isBlank();
     }
 
     /**

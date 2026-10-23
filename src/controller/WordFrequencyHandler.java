@@ -42,9 +42,9 @@ public class WordFrequencyHandler {
      */
     private static UserChoice processWord(final Scanner scanner, final Song song) {
         final String word = ConsoleReader.readWord(scanner);
-        final int continueOption = ConsoleReader.readContinueOption(scanner);
         showWordAppearances(song, word);
         Menu.endMenu();
+        final int continueOption = ConsoleReader.readContinueOption(scanner);
         return UserChoice.fromCode(continueOption);
     }
 
@@ -55,7 +55,7 @@ public class WordFrequencyHandler {
      * @param word the word to search for
      */
     public static void showWordAppearances(final Song song, final String word) {
-        final String cleanedLyrics = StringUtils.toLowerCaseAndstripPunctuation(song.lyrics);
+        final String cleanedLyrics = StringUtils.toLowerCaseAndStripPunctuation(song.lyrics);
         final String[] wordsArray = StringUtils.stringToWordsArray(cleanedLyrics);
         final int wordAppearances = StringUtils.countWord(wordsArray, word);
         System.out.println("The word was repeated in the song " + wordAppearances + " times;\n");

@@ -48,7 +48,7 @@ public class ConsoleReader {
     private static int readInt(final Scanner scanner) {
         String input = scanner.nextLine();
         while (!StringUtils.isInteger(input)) {
-            System.out.println("\nInvalid input! Please enter a valid number: ");
+            System.out.println("\nInvalid input! Please enter 1 or 2: ");
             input = scanner.nextLine();
         }
         return Integer.parseInt(input);
