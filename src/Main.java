@@ -5,11 +5,12 @@ import utils.StringUtils;
 import java.util.Scanner;
 
 public class Main {
+    private static final String SONGS_STORAGE = "data/";
+    private static final String YELLOW_SUBMARINE_PATH = SONGS_STORAGE + "YellowSubmarine.txt";
+
     public static void main(String[] args) {
-        try (final Scanner scanner = new Scanner(System.in)) {
-            final String lyrics = StringUtils.readTextFromFile("/Users/smiti/Documents/YellowSubmarine.txt");
+            final String lyrics = StringUtils.readTextFromFile(YELLOW_SUBMARINE_PATH);
             final Song song = new Song(lyrics);
-            WordFrequencyHandler.startSongAnalyzing(scanner, song);
-        }
+            WordFrequencyHandler.runSongAnalysis(song);
     }
 }

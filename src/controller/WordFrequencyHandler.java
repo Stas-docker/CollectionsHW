@@ -12,25 +12,19 @@ import java.util.Scanner;
 public class WordFrequencyHandler {
 
     /**
-     * Starts the song analysis application.
-     */
-    public static void startSongAnalyzing(final Scanner scanner, final Song song) {
-        runAnalysis(scanner, song);
-    }
-
-    /**
      * Runs the analysis loop until the user exits.
      *
-     * @param scanner the scanner used to read input
-     * @param song    the song to analyze
+     * @param song the song to analyze
      */
-    private static void runAnalysis(final Scanner scanner, final Song song) {
-        UserChoice choice = UserChoice.UNKNOWN;
-        while (choice != UserChoice.EXIT) {
-            Menu.startMenu();
-            choice = processWord(scanner, song);
+    public static void runSongAnalysis(final Song song) {
+        try (final Scanner scanner = new Scanner(System.in)) {
+            UserChoice choice = UserChoice.UNKNOWN;
+            while (choice != UserChoice.EXIT) {
+                Menu.startMenu();
+                choice = processWord(scanner, song);
+            }
+            System.out.println("\nGood Bye!");
         }
-        System.out.println("\nGood Bye!");
     }
 
     /**
@@ -44,8 +38,7 @@ public class WordFrequencyHandler {
         final String word = ConsoleReader.readWord(scanner);
         showWordAppearances(song, word);
         Menu.endMenu();
-        final int continueOption = ConsoleReader.readContinueOption(scanner);
-        return UserChoice.fromCode(continueOption);
+        return ConsoleReader.readUserChoice(scanner);
     }
 
     /**

@@ -30,13 +30,13 @@ public class ConsoleReader {
      * @param scanner the scanner used to read input
      * @return valid user choice (1 or 2)
      */
-    public static int readContinueOption(final Scanner scanner) {
+    public static UserChoice readUserChoice(final Scanner scanner) {
         int choice = readInt(scanner);
         while (!isChoiceValid(choice)) {
             System.out.println("\nInvalid input! Please enter 1 or 2: ");
             choice = readInt(scanner);
         }
-        return choice;
+        return UserChoice.fromCode(choice);
     }
 
     /**

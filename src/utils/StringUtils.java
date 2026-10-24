@@ -33,11 +33,6 @@ public class StringUtils {
         return string.split(" ");
     }
 
-    public static boolean fileIsNotEmpty(final String filePath) {
-        String text = readTextFromFile(filePath);
-        return !text.isBlank();
-    }
-
     /**
      * Counts how many times a word appears in an array.
      *
@@ -47,9 +42,11 @@ public class StringUtils {
      */
     public static int countWord(final String[] arrayOfWords, final String searchedWord) {
         int wordsCounter = 0;
-        for (String word : arrayOfWords) {
-            if (word.equals(searchedWord) && !word.isBlank()) {
-                wordsCounter++;
+        if (arrayOfWords != null && searchedWord != null && !searchedWord.isBlank()) {
+            for (String word : arrayOfWords) {
+                if (word.equals(searchedWord) && !word.isBlank()) {
+                    wordsCounter++;
+                }
             }
         }
         return wordsCounter;
