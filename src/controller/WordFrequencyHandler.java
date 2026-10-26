@@ -1,7 +1,7 @@
 package controller;
 
 import model.Song;
-import utils.StringUtils;
+import utils.Utils;
 import view.Menu;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class WordFrequencyHandler {
             UserChoice choice = UserChoice.UNKNOWN;
             while (choice != UserChoice.EXIT) {
                 Menu.startMenu();
-                choice = processWord(scanner, song);
+                choice = processSong(scanner, song);
             }
             System.out.println("\nGood Bye!");
         }
@@ -35,9 +35,8 @@ public class WordFrequencyHandler {
      * @param song    the song to analyze
      * @return the user's choice
      */
-    private static UserChoice processWord(final Scanner scanner, final Song song) {
-        final String word = ConsoleReader.readWord(scanner);
-        showWordAppearances(song, word);
+    private static UserChoice processSong(final Scanner scanner, final Song song) {
+        showSongWithoutDuplicates(song);
         Menu.endMenu();
         return ConsoleReader.readUserChoice(scanner);
     }
@@ -46,12 +45,13 @@ public class WordFrequencyHandler {
      * Counts and displays the occurrences of a word in the song.
      *
      * @param song the song to analyze
-     * @param word the word to search for
      */
-    public static void showWordAppearances(final Song song, final String word) {
-        final String cleanedLyrics = StringUtils.toLowerCaseAndStripPunctuation(song.lyrics);
-        final List<String> wordsArray = StringUtils.stringToWordsList(cleanedLyrics);
-        final int wordAppearances = StringUtils.countWord(wordsArray, word);
-        System.out.println("The word was repeated in the song " + wordAppearances + " times;\n");
+    public static void showSongWithoutDuplicates(final Song song) {
+        final String cleanedLyrics = Utils.toLowerCaseAndStripPunctuation(song.lyrics);
+        final List<String> wordsList = Utils.stringToWordsList(cleanedLyrics);
+        final List<String> listWithoutDuplicates = Utils.removeDuplicates(wordsList);
+        Utils.sortStringsByLength(listWithoutDuplicates);
+        System.out.println("The words of the song without duplicates and sorted by length: "
+                + listWithoutDuplicates);
     }
 }

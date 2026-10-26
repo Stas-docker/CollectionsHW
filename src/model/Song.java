@@ -1,7 +1,5 @@
 package model;
 
-import utils.StringUtils;
-
 /**
  * Represents a song and its lyrics.
  */

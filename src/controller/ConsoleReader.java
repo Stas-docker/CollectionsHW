@@ -1,6 +1,6 @@
 package controller;
 
-import utils.StringUtils;
+import utils.Utils;
 
 import java.util.Scanner;
 
@@ -8,21 +8,6 @@ import java.util.Scanner;
  * Reads and validates user input from the console.
  */
 public class ConsoleReader {
-
-    /**
-     * Reads a non-empty word from the user.
-     *
-     * @param scanner the scanner used to read input
-     * @return the entered word
-     */
-    public static String readWord(final Scanner scanner) {
-        String word = scanner.nextLine();
-        while (word.isBlank() && scanner.hasNextLine()) {
-            System.out.println("String cannot be blank, please enter a word");
-            word = scanner.nextLine();
-        }
-        return word;
-    }
 
     /**
      * Reads the user's choice to continue or exit (1 or 2).
@@ -47,7 +32,7 @@ public class ConsoleReader {
      */
     private static int readInt(final Scanner scanner) {
         String input = scanner.nextLine();
-        while (!StringUtils.isInteger(input)) {
+        while (!Utils.isInteger(input)) {
             System.out.println("\nInvalid input! Please enter 1 or 2: ");
             input = scanner.nextLine();
         }

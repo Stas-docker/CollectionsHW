@@ -3,15 +3,12 @@ package utils;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Provides utility methods for string processing.
  */
-public class StringUtils {
+public class Utils {
 
     /**
      * Converts a string to lowercase and removes punctuation.
@@ -34,25 +31,6 @@ public class StringUtils {
     public static List<String> stringToWordsList(final String string) {
         String[] wordsArray = string.split(" ");
         return Arrays.asList(wordsArray);
-    }
-
-    /**
-     * Counts how many times a word appears in an array.
-     *
-     * @param wordsList    the list of words
-     * @param searchedWord the word to count
-     * @return the number of occurrences
-     */
-    public static int countWord(final List<String> wordsList, final String searchedWord) {
-        int wordsCounter = 0;
-        if (wordsList != null && searchedWord != null && !searchedWord.isBlank()) {
-            for (String word : wordsList) {
-                if (word.equals(searchedWord) && !word.isBlank()) {
-                    wordsCounter++;
-                }
-            }
-        }
-        return wordsCounter;
     }
 
     /**
@@ -87,6 +65,12 @@ public class StringUtils {
         }
     }
 
+    /**
+     * Removes duplicate words from the list while preserving their original order.
+     *
+     * @param listOfWords the list of words to process
+     * @return a new list containing only unique words
+     */
     public static List<String> removeDuplicates(final List<String> listOfWords) {
         List<String> listWithoutDuplicates = new ArrayList<>();
         Iterator<String> iterator = listOfWords.iterator();
@@ -97,5 +81,20 @@ public class StringUtils {
             }
         }
         return listWithoutDuplicates;
+    }
+
+    /**
+     * Sorts a list of words in ascending order based on their length.
+     *
+     * @param listOfWords the list of words to sort in place
+     */
+    public static void sortStringsByLength(final List<String> listOfWords) {
+        Comparator<String> lengthComparator = new Comparator<String>() {
+            @Override
+            public int compare(String word1, String word2) {
+                return Integer.compare(word1.length(), word2.length());
+            }
+        };
+        listOfWords.sort(lengthComparator);
     }
 }
