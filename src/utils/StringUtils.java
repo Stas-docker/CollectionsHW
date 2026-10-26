@@ -1,10 +1,12 @@
 package utils;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Provides utility methods for string processing.
@@ -27,23 +29,24 @@ public class StringUtils {
      * Splits a string into an array of words.
      *
      * @param string the string to split
-     * @return an array of words
+     * @return a list of words
      */
-    public static String[] stringToWordsArray(final String string) {
-        return string.split(" ");
+    public static List<String> stringToWordsList(final String string) {
+        String[] wordsArray = string.split(" ");
+        return Arrays.asList(wordsArray);
     }
 
     /**
      * Counts how many times a word appears in an array.
      *
-     * @param arrayOfWords the array of words
+     * @param wordsList    the list of words
      * @param searchedWord the word to count
      * @return the number of occurrences
      */
-    public static int countWord(final String[] arrayOfWords, final String searchedWord) {
+    public static int countWord(final List<String> wordsList, final String searchedWord) {
         int wordsCounter = 0;
-        if (arrayOfWords != null && searchedWord != null && !searchedWord.isBlank()) {
-            for (String word : arrayOfWords) {
+        if (wordsList != null && searchedWord != null && !searchedWord.isBlank()) {
+            for (String word : wordsList) {
                 if (word.equals(searchedWord) && !word.isBlank()) {
                     wordsCounter++;
                 }
@@ -82,5 +85,17 @@ public class StringUtils {
         } catch (IOException e) {
             return "We could not process the file";
         }
+    }
+
+    public static List<String> removeDuplicates(final List<String> listOfWords) {
+        List<String> listWithoutDuplicates = new ArrayList<>();
+        Iterator<String> iterator = listOfWords.iterator();
+        while (iterator.hasNext()) {
+            String word = iterator.next();
+            if (!listWithoutDuplicates.contains(word)) {
+                listWithoutDuplicates.add(word);
+            }
+        }
+        return listWithoutDuplicates;
     }
 }

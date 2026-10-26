@@ -4,6 +4,7 @@ import model.Song;
 import utils.StringUtils;
 import view.Menu;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -49,7 +50,7 @@ public class WordFrequencyHandler {
      */
     public static void showWordAppearances(final Song song, final String word) {
         final String cleanedLyrics = StringUtils.toLowerCaseAndStripPunctuation(song.lyrics);
-        final String[] wordsArray = StringUtils.stringToWordsArray(cleanedLyrics);
+        final List<String> wordsArray = StringUtils.stringToWordsList(cleanedLyrics);
         final int wordAppearances = StringUtils.countWord(wordsArray, word);
         System.out.println("The word was repeated in the song " + wordAppearances + " times;\n");
     }
