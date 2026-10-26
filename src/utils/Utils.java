@@ -30,7 +30,7 @@ public class Utils {
      */
     public static List<String> stringToWordsList(final String string) {
         String[] wordsArray = string.split(" ");
-        return Arrays.asList(wordsArray);
+        return new ArrayList<>(Arrays.asList(wordsArray));
     }
 
     /**
@@ -87,27 +87,11 @@ public class Utils {
     }
 
     /**
-     * Removes duplicate words from the list while preserving their original order.
+     * Removes specific words from a list.
      *
      * @param listOfWords the list of words to process
-     * @return a new list containing only unique words
      */
-    public static List<String> removeDuplicates(final List<String> listOfWords) {
-        final List<String> listWithoutDuplicates = new ArrayList<>();
-        for (String word : listOfWords) {
-            if (!listWithoutDuplicates.contains(word)) {
-                listWithoutDuplicates.add(word);
-            }
-        }
-        return listWithoutDuplicates;
-    }
-
-    /**
-     * Sorts a list of words in ascending order based on their length.
-     *
-     * @param listOfWords the list of words to sort in place
-     */
-    public static void sortStringsByLength(final List<String> listOfWords) {
-        listOfWords.sort(new StringLengthComparator());
+    public static void removeWords(final List<String> listOfWords, final List<String> listOfWordsToDelete) {
+        listOfWords.removeAll(listOfWordsToDelete);
     }
 }

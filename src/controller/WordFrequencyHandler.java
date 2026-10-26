@@ -40,11 +40,16 @@ public class WordFrequencyHandler {
     private static UserChoice processSong(final Scanner scanner) {
         showAWordFrequency(scanner);
         Menu.middleMenu();
-        showSongWithoutDuplicates();
+        showASongWordsWithoutDeletedWords(scanner);
         Menu.endMenu();
         return ConsoleReader.readUserChoice(scanner);
     }
 
+    /**
+     * Prompts for a word and prints how many times it appears in the song.
+     *
+     * @param scanner the scanner used to read the word
+     */
     private static void showAWordFrequency(final Scanner scanner) {
         final String word = ConsoleReader.readWord(scanner);
         final int wordNumber = Utils.countWord(wordsList, word);
@@ -52,12 +57,23 @@ public class WordFrequencyHandler {
     }
 
     /**
-     * Displays unique words from the song lyrics, sorted by their length.
+     * Reads a list of words from input, removes them from the song, and displays the remaining words.
+     *
+     * @param scanner the scanner used to read input
      */
-    private static void showSongWithoutDuplicates() {
-        final List<String> listWithoutDuplicates = Utils.removeDuplicates(wordsList);
-        Utils.sortStringsByLength(listWithoutDuplicates);
-        System.out.println("The words of the song without duplicates and sorted by length: "
-                + listWithoutDuplicates + "\n");
+    private static void showASongWordsWithoutDeletedWords(final Scanner scanner) {
+        System.out.println("Write the amount of words you want to delete: ");
+        deleteWordsFromSong(ConsoleReader.readAlistOfWords(scanner));
+        System.out.println("\nThe words of the song without deleted: "
+                + wordsList + "\n");
+    }
+
+    /**
+     * Removes specified words from the main song words list.
+     *
+     * @param listOfWordsToDelete list of words to be deleted
+     */
+    private static void deleteWordsFromSong(List<String> listOfWordsToDelete) {
+        Utils.removeWords(wordsList, listOfWordsToDelete);
     }
 }

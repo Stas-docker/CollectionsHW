@@ -15,7 +15,7 @@ public class Menu {
     }
 
     public static void middleMenu() {
-        System.out.println("Now you can see the words of the song without duplicates and sorted by length: ");
+        System.out.println("Now type words you want delete from a song: ");
     }
 
     /**

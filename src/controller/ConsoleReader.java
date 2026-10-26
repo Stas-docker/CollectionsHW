@@ -2,6 +2,8 @@ package controller;
 
 import utils.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -47,11 +49,27 @@ public class ConsoleReader {
      */
     private static int readInt(final Scanner scanner) {
         String input = scanner.nextLine();
-        while (!Utils.isInteger(input)) {
-            System.out.println("\nInvalid input! Please enter 1 or 2: ");
+        while (!Utils.isInteger(input) || Integer.parseInt(input) <= 0) {
+            System.out.println("\nInvalid input! Please enter valid positive int number: ");
             input = scanner.nextLine();
         }
         return Integer.parseInt(input);
+    }
+
+    /**
+     * Reads a specified number of words entered by the user from the console.
+     *
+     * @param scanner the scanner used to read user input
+     * @return a list containing the entered words
+     */
+    public static List<String> readAlistOfWords(final Scanner scanner) {
+        int amount = readInt(scanner);
+        System.out.println("\nWrite the words using enter: ");
+        final List<String> listOfWordsToDelete = new ArrayList<>(amount);
+        for (int i = 0; i < amount; i++) {
+            listOfWordsToDelete.add(readWord(scanner));
+        }
+        return listOfWordsToDelete;
     }
 
     /**

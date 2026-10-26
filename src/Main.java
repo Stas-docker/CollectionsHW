@@ -8,7 +8,6 @@ public class Main {
 
     public static void main(String[] args) {
             final String lyrics = Utils.readTextFromFile(YELLOW_SUBMARINE_PATH);
-            final Song song = new Song(lyrics);
-            WordFrequencyHandler.runSongAnalysis(song);
+            WordFrequencyHandler.runSongAnalysis(new Song(lyrics));
     }
 }
