@@ -72,10 +72,8 @@ public class Utils {
      * @return a new list containing only unique words
      */
     public static List<String> removeDuplicates(final List<String> listOfWords) {
-        List<String> listWithoutDuplicates = new ArrayList<>();
-        Iterator<String> iterator = listOfWords.iterator();
-        while (iterator.hasNext()) {
-            String word = iterator.next();
+        final List<String> listWithoutDuplicates = new ArrayList<>();
+        for (String word : listOfWords) {
             if (!listWithoutDuplicates.contains(word)) {
                 listWithoutDuplicates.add(word);
             }
@@ -89,12 +87,6 @@ public class Utils {
      * @param listOfWords the list of words to sort in place
      */
     public static void sortStringsByLength(final List<String> listOfWords) {
-        Comparator<String> lengthComparator = new Comparator<String>() {
-            @Override
-            public int compare(String word1, String word2) {
-                return Integer.compare(word1.length(), word2.length());
-            }
-        };
-        listOfWords.sort(lengthComparator);
+        listOfWords.sort(new StringLengthComparator());
     }
 }

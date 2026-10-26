@@ -42,7 +42,7 @@ public class WordFrequencyHandler {
     }
 
     /**
-     * Counts and displays the occurrences of a word in the song.
+     * Displays unique words from the song lyrics, sorted by their length.
      *
      * @param song the song to analyze
      */
