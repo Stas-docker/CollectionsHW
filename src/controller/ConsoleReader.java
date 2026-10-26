@@ -25,6 +25,21 @@ public class ConsoleReader {
     }
 
     /**
+     * Reads a non-empty word from the user.
+     *
+     * @param scanner the scanner used to read input
+     * @return the entered word
+     */
+    public static String readWord(final Scanner scanner) {
+        String word = scanner.nextLine();
+        while (word.isBlank() && scanner.hasNextLine()) {
+            System.out.println("String cannot be blank, please enter a word");
+            word = scanner.nextLine();
+        }
+        return word;
+    }
+
+    /**
      * Safely reads an integer from the scanner.
      *
      * @param scanner the scanner used to read input

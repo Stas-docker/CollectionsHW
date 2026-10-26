@@ -34,6 +34,25 @@ public class Utils {
     }
 
     /**
+     * Counts how many times a word appears in an array.
+     *
+     * @param wordsList    the list of words
+     * @param searchedWord the word to count
+     * @return the number of occurrences
+     */
+    public static int countWord(final List<String> wordsList, final String searchedWord) {
+        int wordsCounter = 0;
+        if (wordsList != null && searchedWord != null && !searchedWord.isBlank()) {
+            for (String word : wordsList) {
+                if (word.equals(searchedWord) && !word.isBlank()) {
+                    wordsCounter++;
+                }
+            }
+        }
+        return wordsCounter;
+    }
+
+    /**
      * Checks whether the input string can be parsed as a valid integer.
      *
      * @param value the string to validate
@@ -58,11 +77,13 @@ public class Utils {
      * @throws IOException if an I/O error occurs reading the file
      */
     public static String readTextFromFile(final String filePath) {
+        String textFromFile;
         try {
-            return Files.readString(Path.of(filePath));
+            textFromFile = Files.readString(Path.of(filePath));
         } catch (IOException e) {
-            return "We could not process the file";
+            textFromFile = "We could not process the file";
         }
+        return textFromFile;
     }
 
     /**

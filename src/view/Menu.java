@@ -10,8 +10,12 @@ public class Menu {
      */
     public static void startMenu() {
         System.out.println("""
-                \nHi, let's remove all duplicate words from a song and print them:
+                \nHi, enter a word and I will show you how many times it was repeated in the song:
                 """);
+    }
+
+    public static void middleMenu() {
+        System.out.println("Now you can see the words of the song without duplicates and sorted by length: ");
     }
 
     /**
