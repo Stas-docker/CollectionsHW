@@ -1,16 +1,23 @@
 package model;
 
+import utils.Utils;
+
 /**
  * Represents a song and its lyrics.
  */
 public class Song {
-    private static String lyrics;
+    private String songPath;
+    private final String lyrics;
 
-    public Song(String lyrics) {
-        this.lyrics = lyrics;
+    public String getLyrics() {
+        return lyrics;
     }
 
-    public static String getLyrics() {
-        return lyrics;
+    public Song(final String songPath) {
+        if (songPath == null) {
+            throw new IllegalArgumentException("Song path cannot be null");
+        }
+        this.songPath = songPath;
+        this.lyrics = Utils.readTextFromFile(songPath);
     }
 }

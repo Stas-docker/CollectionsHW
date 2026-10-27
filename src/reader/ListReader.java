@@ -13,12 +13,6 @@ public class ListReader {
         this.stringReader = stringReader;
     }
 
-    /**
-     * Reads a specified number of words entered by the user from the console.
-     *
-     * @param scanner the scanner used to read user input
-     * @return a list containing the entered words
-     */
     public List<String> readWordList(final Scanner scanner) {
         final int amount = intReader.readPositiveNotZeroInt(scanner);
         System.out.println("\nWrite the words using enter: ");
