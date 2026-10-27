@@ -1,6 +1,7 @@
 package controller;
 
 import model.Song;
+import reader.*;
 import utils.Utils;
 import view.Menu;
 
@@ -12,8 +13,9 @@ import java.util.Scanner;
  */
 public class WordFrequencyHandler {
 
-    final private static String cleanedLyrics = Utils.toLowerCaseAndStripPunctuation(Song.lyrics);
-    final private static List<String> wordsList = Utils.stringToWordsList(cleanedLyrics);
+    final private static String CLEANED_LYRICS = Utils.toLowerCaseAndStripPunctuation(Song.getLyrics());
+    final private static List<String> WORDS_LIST = Utils.stringToWordsList(CLEANED_LYRICS);
+
 
     /**
      * Runs the analysis loop until the user exits.
@@ -38,11 +40,13 @@ public class WordFrequencyHandler {
      * @return the user's choice
      */
     private static UserChoice processSong(final Scanner scanner) {
+        IntReader intReader = new ConsoleIntReader();
+        UserChoiceReader userChoiceReader = new UserChoiceReader(intReader);
         showAWordFrequency(scanner);
         Menu.middleMenu();
         showASongWordsWithoutDeletedWords(scanner);
         Menu.endMenu();
-        return ConsoleReader.readUserChoice(scanner);
+        return userChoiceReader.readUserChoice(scanner);
     }
 
     /**
@@ -51,8 +55,9 @@ public class WordFrequencyHandler {
      * @param scanner the scanner used to read the word
      */
     private static void showAWordFrequency(final Scanner scanner) {
-        final String word = ConsoleReader.readWord(scanner);
-        final int wordNumber = Utils.countWord(wordsList, word);
+        StringReader stringReader = new ConsoleWordReader();
+        final String word = stringReader.readString(scanner);
+        final int wordNumber = Utils.countWord(WORDS_LIST, word);
         System.out.println("The word you've just entered was repeated in the song " + wordNumber + " times.\n");
     }
 
@@ -62,10 +67,13 @@ public class WordFrequencyHandler {
      * @param scanner the scanner used to read input
      */
     private static void showASongWordsWithoutDeletedWords(final Scanner scanner) {
+        IntReader intReader = new ConsoleIntReader();
+        StringReader stringReader = new ConsoleWordReader();
+        ListReader listReader = new ListReader(intReader, stringReader);
         System.out.println("Write the amount of words you want to delete: ");
-        deleteWordsFromSong(ConsoleReader.readAlistOfWords(scanner));
+        deleteWordsFromSong(listReader.readWordList(scanner));
         System.out.println("\nThe words of the song without deleted: "
-                + wordsList + "\n");
+                + WORDS_LIST + "\n");
     }
 
     /**
@@ -74,6 +82,6 @@ public class WordFrequencyHandler {
      * @param listOfWordsToDelete list of words to be deleted
      */
     private static void deleteWordsFromSong(List<String> listOfWordsToDelete) {
-        Utils.removeWords(wordsList, listOfWordsToDelete);
+        Utils.removeWords(WORDS_LIST, listOfWordsToDelete);
     }
 }

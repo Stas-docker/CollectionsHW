@@ -53,23 +53,6 @@ public class Utils {
     }
 
     /**
-     * Checks whether the input string can be parsed as a valid integer.
-     *
-     * @param value the string to validate
-     * @return true if the string is a valid integer, false otherwise
-     */
-    public static boolean isInteger(String value) {
-        boolean isValid;
-        try {
-            Integer.parseInt(value);
-            isValid = true;
-        } catch (NumberFormatException e) {
-            isValid = false;
-        }
-        return isValid;
-    }
-
-    /**
      * Reads the entire content of a file into a single string.
      *
      * @param filePath path to the target file

@@ -4,9 +4,13 @@ package model;
  * Represents a song and its lyrics.
  */
 public class Song {
-    public static String lyrics;
+    private static String lyrics;
 
     public Song(String lyrics) {
         this.lyrics = lyrics;
+    }
+
+    public static String getLyrics() {
+        return lyrics;
     }
 }
