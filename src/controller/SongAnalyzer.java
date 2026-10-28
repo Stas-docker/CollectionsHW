@@ -101,16 +101,13 @@ public class SongAnalyzer {
      * Reads a target string from input and checks if it exists within the song text.
      *
      * @param scanner the scanner used to read user input
-     * @return {@code true} if the target string is present in the song text, {@code false} otherwise
      * @throws RuntimeException if an underlying {@link BeatlesException} occurs during search
      */
-    private boolean foundAString(final Scanner scanner) {
+    private void foundAString(final Scanner scanner) throws BeatlesException {
         String stringToFind = stringReader.readString(scanner);
         String songText = String.join(" ", wordsList);
-        try {
-            return Utils.stringCanBeFound(stringToFind, songText);
-        } catch (BeatlesException stringInBeatlesException) {
-            throw new RuntimeException(stringInBeatlesException);
+        if (!Utils.stringCanBeFound(stringToFind, songText)) {
+            throw new BeatlesException("The song does not contain the string");
         }
     }
 
@@ -120,9 +117,10 @@ public class SongAnalyzer {
      * @param scanner the scanner used to read user input
      */
     private void confirmStringIsInSong(final Scanner scanner) {
-        if (foundAString(scanner)) {
+        try {
+            foundAString(scanner);
             System.out.println("\nYes, it is in the song\n");
-        } else {
+        } catch (BeatlesException e) {
             System.out.println("\nNo, it is not in the song\n");
         }
     }
