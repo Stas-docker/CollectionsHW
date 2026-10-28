@@ -2,6 +2,7 @@ package controller;
 
 import model.Song;
 import reader.*;
+import utils.BeatlesException;
 import utils.Utils;
 import view.Menu;
 
@@ -12,7 +13,11 @@ import java.util.Scanner;
 /**
  * Controls the song analysis process.
  */
-public class WordFrequencyHandler {
+public class SongAnalyzer {
+    private final IntReader intReader = new ConsoleIntReader();
+    private final StringReader stringReader = new ConsoleWordReader();
+    private final ListReader listReader = new ListReader(intReader, stringReader);
+    private final UserChoiceReader userChoiceReader = new UserChoiceReader(intReader);
     private List<String> wordsList;
 
     /**
@@ -40,7 +45,7 @@ public class WordFrequencyHandler {
      */
     private void initializeLyrics(final Song song) {
         final String cleanedLyrics = Utils.toLowerCaseAndStripPunctuation(song.getLyrics());
-        this.wordsList = new ArrayList<>(Utils.stringToWordsList(cleanedLyrics));
+        wordsList = new ArrayList<>(Utils.stringToWordsList(cleanedLyrics));
     }
 
     /**
@@ -51,11 +56,11 @@ public class WordFrequencyHandler {
      * @return the user's choice
      */
     private UserChoice processSong(final Scanner scanner) {
-        IntReader intReader = new ConsoleIntReader();
-        UserChoiceReader userChoiceReader = new UserChoiceReader(intReader);
         showAWordFrequency(scanner);
-        Menu.middleMenu();
+        Menu.deleteMenu();
         showASongWordsWithoutDeletedWords(scanner);
+        Menu.findAStringMenu();
+        confirmStringIsInSong(scanner);
         Menu.endMenu();
         return userChoiceReader.readUserChoice(scanner);
     }
@@ -66,9 +71,8 @@ public class WordFrequencyHandler {
      * @param scanner the scanner used to read the word
      */
     private void showAWordFrequency(final Scanner scanner) {
-        StringReader stringReader = new ConsoleWordReader();
         final String word = stringReader.readString(scanner);
-        final int wordNumber = Utils.countWord(this.wordsList, word);
+        final int wordNumber = Utils.countWord(wordsList, word);
         System.out.println("The word you've just entered was repeated in the song " + wordNumber + " times.\n");
     }
 
@@ -78,13 +82,10 @@ public class WordFrequencyHandler {
      * @param scanner the scanner used to read input
      */
     private void showASongWordsWithoutDeletedWords(final Scanner scanner) {
-        IntReader intReader = new ConsoleIntReader();
-        StringReader stringReader = new ConsoleWordReader();
-        ListReader listReader = new ListReader(intReader, stringReader);
         System.out.println("Write the amount of words you want to delete: ");
         deleteWordsFromSong(listReader.readWordList(scanner));
         System.out.println("\nThe words of the song without deleted: "
-                + this.wordsList + "\n");
+                + wordsList + "\n");
     }
 
     /**
@@ -93,6 +94,36 @@ public class WordFrequencyHandler {
      * @param listOfWordsToDelete list of words to be deleted
      */
     private void deleteWordsFromSong(List<String> listOfWordsToDelete) {
-        Utils.removeWords(this.wordsList, listOfWordsToDelete);
+        Utils.removeWords(wordsList, listOfWordsToDelete);
+    }
+
+    /**
+     * Reads a target string from input and checks if it exists within the song text.
+     *
+     * @param scanner the scanner used to read user input
+     * @return {@code true} if the target string is present in the song text, {@code false} otherwise
+     * @throws RuntimeException if an underlying {@link BeatlesException} occurs during search
+     */
+    private boolean foundAString(final Scanner scanner) {
+        String stringToFind = stringReader.readString(scanner);
+        String songText = String.join(" ", wordsList);
+        try {
+            return Utils.stringCanBeFound(stringToFind, songText);
+        } catch (BeatlesException stringInBeatlesException) {
+            throw new RuntimeException(stringInBeatlesException);
+        }
+    }
+
+    /**
+     * Prompts the user to search for a string and prints whether it was found in the song.
+     *
+     * @param scanner the scanner used to read user input
+     */
+    private void confirmStringIsInSong(final Scanner scanner) {
+        if (foundAString(scanner)) {
+            System.out.println("\nYes, it is in the song\n");
+        } else {
+            System.out.println("\nNo, it is not in the song\n");
+        }
     }
 }

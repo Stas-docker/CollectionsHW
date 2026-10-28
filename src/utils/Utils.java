@@ -1,5 +1,6 @@
 package utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -59,14 +60,10 @@ public class Utils {
      * @return file content as a string
      * @throws IOException if an I/O error occurs reading the file
      */
-    public static String readTextFromFile(final String filePath) {
-        String textFromFile;
-        try {
-            textFromFile = Files.readString(Path.of(filePath));
-        } catch (IOException e) {
-            textFromFile = "We could not process the file";
+    public static String readTextFromFile(final String filePath) throws IOException {
+        try (final BufferedReader reader = Files.newBufferedReader(Path.of(filePath))) {
+            return reader.readAllAsString();
         }
-        return textFromFile;
     }
 
     /**
@@ -76,5 +73,18 @@ public class Utils {
      */
     public static void removeWords(final List<String> listOfWords, final List<String> listOfWordsToDelete) {
         listOfWords.removeAll(listOfWordsToDelete);
+    }
+
+    /**
+     * Checks whether the specified search string is present in the song text.
+     *
+     * @param string the string to search for
+     * @param songText the text of the song to search within
+     * @return {@code true} if the string is found in the song text, {@code false} otherwise
+     * @throws BeatlesException if an error occurs during processing
+     */
+    public static boolean stringCanBeFound(final String string, final String songText) throws BeatlesException {
+        final String cleanedString = toLowerCaseAndStripPunctuation(string);
+        return songText.contains(cleanedString);
     }
 }

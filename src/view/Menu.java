@@ -14,8 +14,12 @@ public class Menu {
                 """);
     }
 
-    public static void middleMenu() {
+    public static void deleteMenu() {
         System.out.println("Now type words you want delete from a song: ");
+    }
+
+    public static void findAStringMenu() {
+        System.out.println("Now type a string and I will tell you if it is in the song: ");
     }
 
     /**
